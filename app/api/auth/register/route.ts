@@ -1,3 +1,0 @@
-import {NextResponse} from 'next/server';import bcrypt from 'bcryptjs';import {z} from 'zod';import {db} from '@/lib/db';import {createSession} from '@/lib/auth'
-const s=z.object({name:z.string().min(2),email:z.string().email(),password:z.string().min(8)})
-export async function POST(req:Request){try{const b=s.parse(await req.json());const exists=await db.user.findUnique({where:{email:b.email}});if(exists)return NextResponse.json({error:'Cet email est déjà utilisé.'},{status:409});const u=await db.user.create({data:{name:b.name,email:b.email,passwordHash:await bcrypt.hash(b.password,12)}});await createSession(u.id);return NextResponse.json({ok:true})}catch(e:any){return NextResponse.json({error:e.message||'Erreur'},{status:400})}}
