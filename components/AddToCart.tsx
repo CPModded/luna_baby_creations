@@ -1,0 +1,5 @@
+'use client'
+import {useState} from 'react'
+export type CartItem={id:string;name:string;price:number;image:string;quantity:number;customization?:any}
+export function addItem(item:CartItem){const cart:CartItem[]=JSON.parse(localStorage.getItem('luna_cart')||'[]');const idx=cart.findIndex(x=>x.id===item.id && JSON.stringify(x.customization||{})===JSON.stringify(item.customization||{}));if(idx>=0)cart[idx].quantity+=item.quantity;else cart.push(item);localStorage.setItem('luna_cart',JSON.stringify(cart));window.dispatchEvent(new Event('luna-cart'))}
+export default function AddToCart({item}:{item:CartItem}){const [added,setAdded]=useState(false);return <button className="btn full" onClick={()=>{addItem(item);setAdded(true);setTimeout(()=>setAdded(false),1600)}}>{added?'Ajouté au panier ♡':'Ajouter au panier'}</button>}

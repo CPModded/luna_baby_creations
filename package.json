@@ -1,0 +1,34 @@
+{
+  "name": "luna-baby-creations",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p ${SERVER_PORT:-3000}",
+    "migrate:postgres": "node scripts/migrate-mongo-to-postgres.mjs",
+    "setup:postgres": "node scripts/setup-postgres.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "jose": "^6.1.0",
+    "lucide-react": "^0.468.0",
+    "mongoose": "^8.18.0",
+    "next": "^15.5.6",
+    "pg": "^8.16.3",
+    "pdf-lib": "^1.17.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "resend": "^6.0.0",
+    "stripe": "^18.5.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.3"
+  },
+  "engines": { "node": ">=20" }
+}
