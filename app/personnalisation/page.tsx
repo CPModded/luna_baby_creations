@@ -1,2 +1,0 @@
-import Personalizer from '@/components/Personalizer'
-export default function Personalisation(){return <main className="page"><div className="container"><div className="page-head"><div className="eyebrow">Création sur mesure</div><h1>Personnalisation ♡</h1><p className="muted">Créez une attache tétine unique qui ressemble à votre bébé.</p></div><Personalizer/></div></main>}

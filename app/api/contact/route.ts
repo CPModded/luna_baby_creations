@@ -1,3 +1,0 @@
-import {NextResponse} from 'next/server';import {z} from 'zod';import {db} from '@/lib/db';import {Resend} from 'resend'
-const s=z.object({name:z.string().min(2),email:z.string().email(),subject:z.string(),message:z.string().min(5)})
-export async function POST(req:Request){try{const b=s.parse(await req.json());await db.contactMessage.create({data:b});if(process.env.RESEND_API_KEY&&process.env.MAIL_FROM){const resend=new Resend(process.env.RESEND_API_KEY);await resend.emails.send({from:process.env.MAIL_FROM,to:process.env.ADMIN_EMAIL||'admin@lunababy.fr',subject:`Luna Baby · ${b.subject}`,text:`${b.name} <${b.email}>\n\n${b.message}`})}return NextResponse.json({ok:true})}catch(e:any){return NextResponse.json({error:e.message||'Erreur'},{status:400})}}

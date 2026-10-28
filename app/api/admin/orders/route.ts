@@ -1,2 +1,0 @@
-import {NextResponse} from 'next/server';import {db} from '@/lib/db';import {requireAdmin} from '@/lib/auth'
-export async function PATCH(req:Request){try{await requireAdmin();const {id,status}=await req.json();const o=await db.order.update({where:{id},data:{status}});return NextResponse.json(o)}catch(e:any){return NextResponse.json({error:e.message},{status:403})}}
