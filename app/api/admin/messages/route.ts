@@ -1,1 +1,0 @@
-import {NextResponse} from 'next/server';import {db} from '@/lib/db';import {requireAdmin} from '@/lib/auth';export async function PATCH(req:Request){try{await requireAdmin();const {id,read}=await req.json();return NextResponse.json(await db.contactMessage.update({where:{id},data:{read}}))}catch(e:any){return NextResponse.json({error:e.message},{status:403})}}
