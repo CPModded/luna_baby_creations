@@ -11,7 +11,7 @@ export default async function Messages() {
         <td>{new Date(message.createdAt).toLocaleString('fr-FR')}</td>
         <td>{message.name}<br /><a href={`mailto:${encodeURIComponent(message.email)}`}>{message.email}</a></td>
         <td>{message.subject}</td><td style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{message.message}</td>
-        <td><MessageActions id={message.id} read={Boolean(message.read)} /></td>
+        <td><MessageActions id={message.id} read={Boolean(message.read)} email={message.email} subject={message.subject} /></td>
       </tr>) : <tr><td colSpan={5}>Aucun message reçu pour le moment.</td></tr>}</tbody>
     </table></div>
   </>

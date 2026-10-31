@@ -8,6 +8,7 @@ export default function MessageActions({ id, read, email, subject }: Props) {
   const router = useRouter()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
   const [replyOpen, setReplyOpen] = useState(false)
   const [replySubject, setReplySubject] = useState(subject.toLowerCase().startsWith('re:') ? subject : `Re: ${subject}`)
   const [body, setBody] = useState('')
@@ -22,12 +23,12 @@ export default function MessageActions({ id, read, email, subject }: Props) {
     finally { setBusy(false) }
   }
   async function sendReply(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setBusy(true); setError('')
+    event.preventDefault(); setBusy(true); setError(''); setNotice('')
     try {
       const response = await fetch(`/api/admin/messages/${encodeURIComponent(id)}/reply`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: replySubject, body }) })
       const result = await response.json().catch(() => ({}))
       if (!response.ok) throw new Error(result.error || 'Envoi de la réponse impossible.')
-      setBody(''); setReplyOpen(false); router.refresh()
+      setBody(''); setReplyOpen(false); if (result.emailSent === false) setNotice(result.message || 'Réponse enregistrée, e-mail non envoyé.'); router.refresh()
     } catch (cause) { setError(cause instanceof Error ? cause.message : 'Erreur réseau.') }
     finally { setBusy(false) }
   }
@@ -40,6 +41,7 @@ export default function MessageActions({ id, read, email, subject }: Props) {
       <label>Message <textarea className="input" required minLength={2} maxLength={10000} rows={5} value={body} onChange={event => setBody(event.target.value)} /></label>
       <button className="small-btn" type="submit" disabled={busy}>{busy ? 'Envoi…' : 'Envoyer la réponse'}</button>
     </form>}
+    {notice && <small role="status" style={{ display: 'block', color: '#8a5b00' }}>{notice}</small>}
     {error && <small role="alert" style={{ display: 'block', color: '#a00' }}>{error}</small>}
   </div>
 }
