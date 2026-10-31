@@ -1,2 +1,0 @@
-import CartClient from '@/components/CartClient'
-export default function Panier(){return <main className="page"><div className="container"><div className="page-head"><h1>Votre panier</h1><p className="muted">Vos créations vous attendent.</p></div><CartClient/></div></main>}
